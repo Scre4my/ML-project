@@ -5,7 +5,7 @@ from tensorflow.keras.models import load_model
 
 st.write("📢 Приложение запускается...")
 # Загрузка модели
-model = load_model("model.h5")
+model = load_model("model.keras")
 classes = ['airplane', 'automobile', 'bird', 'cat', 'deer',
            'dog', 'frog', 'horse', 'ship', 'truck']
 

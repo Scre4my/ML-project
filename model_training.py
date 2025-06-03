@@ -18,4 +18,4 @@ model = Sequential([
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 model.fit(x_train, y_train, epochs=1, batch_size=64)  # Для теста хватит 1 эпохи
-model.save("model.h5")
+model.save("model.keras")
