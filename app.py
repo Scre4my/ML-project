@@ -1,30 +1,30 @@
 import streamlit as st
-import pandas as pd
+from PIL import Image
 import numpy as np
-import joblib
+from tensorflow.keras.models import load_model
 
 # Загрузка модели
-model = joblib.load("model.pkl")
+model = load_model("model.h5")
+classes = ['airplane', 'automobile', 'bird', 'cat', 'deer',
+           'dog', 'frog', 'horse', 'ship', 'truck']
 
-# Заголовок
-st.title("🌸 Классификация цветка Iris")
-st.write("Введите параметры цветка и получите предсказание его вида.")
+st.title("🖼️ Классификатор изображений (CIFAR-10)")
+st.write("Загрузите изображение (32x32 или будет изменено автоматически)")
 
-# Ввод параметров пользователем
-sepal_length = st.slider('Длина чашелистика (см)', 4.0, 8.0, 5.1)
-sepal_width = st.slider('Ширина чашелистика (см)', 2.0, 4.5, 3.5)
-petal_length = st.slider('Длина лепестка (см)', 1.0, 7.0, 1.4)
-petal_width = st.slider('Ширина лепестка (см)', 0.1, 2.5, 0.2)
+uploaded_file = st.file_uploader("Выберите изображение...", type=["jpg", "png", "jpeg"])
 
-input_data = np.array([[sepal_length, sepal_width, petal_length, petal_width]])
-prediction = model.predict(input_data)
-prediction_proba = model.predict_proba(input_data)
+if uploaded_file is not None:
+    image = Image.open(uploaded_file).convert("RGB")
+    st.image(image, caption="Загруженное изображение", use_column_width=True)
 
-# Отображение результата
-species = ['Setosa', 'Versicolor', 'Virginica']
-st.subheader("Результат предсказания:")
-st.success(f"🌼 Предсказанный вид цветка: **{species[prediction[0]]}**")
+    # Предобработка
+    img = image.resize((32, 32))
+    img_array = np.array(img).astype("float32") / 255.0
+    img_array = np.expand_dims(img_array, axis=0)
 
-st.subheader("Вероятности по классам:")
-proba_df = pd.DataFrame(prediction_proba, columns=species)
-st.dataframe(proba_df)
+    # Предсказание
+    prediction = model.predict(img_array)
+    predicted_class = classes[np.argmax(prediction)]
+
+    st.subheader("🧠 Результат предсказания:")
+    st.success(f"Объект на изображении: **{predicted_class}**")
