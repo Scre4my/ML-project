@@ -6,6 +6,7 @@ from nltk.corpus import stopwords
 stop_words = set(stopwords.words('russian'))
 
 def preprocess_text(text):
+    text = str(text)
     text = text.lower()
     text = re.sub(r"[^\w\s]", "", text)
     words = text.split()

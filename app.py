@@ -10,7 +10,9 @@ uploaded_file = st.file_uploader("Загрузите CSV-файл", type=["csv"]
 
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file, encoding='cp1251')
-
+    if df['text'].isnull().any():
+        st.warning("Некоторые строки пустые — они будут пропущены.")
+        df = df.dropna(subset=['text'])
     if 'text' not in df.columns:
         st.error("Файл должен содержать колонку 'text'")
     else:
