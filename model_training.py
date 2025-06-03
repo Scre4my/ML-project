@@ -1,4 +1,3 @@
-# model_training.py (исполняется один раз)
 from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
 import joblib
