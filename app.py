@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
-from utils import preprocess_text
+from model_training import preprocess_text
 
 st.title("📝 Классификация отзывов")
 st.write("Загрузите CSV-файл с текстовыми отзывами для анализа их тональности.")
