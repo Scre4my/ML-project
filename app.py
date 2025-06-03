@@ -3,6 +3,7 @@ from PIL import Image
 import numpy as np
 from tensorflow.keras.models import load_model
 
+st.write("📢 Приложение запускается...")
 # Загрузка модели
 model = load_model("model.h5")
 classes = ['airplane', 'automobile', 'bird', 'cat', 'deer',
