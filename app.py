@@ -21,6 +21,6 @@ if uploaded_file is not None:
 
         df['processed'] = df['text'].apply(preprocess_text)
         df['prediction'] = model.predict(df['processed'])
-
+        df['prediction'] = df['prediction'].map({1: 'положительный', 0: 'отрицательный'})
         st.subheader("Результаты предсказания:")
         st.write(df[['text', 'prediction']])
